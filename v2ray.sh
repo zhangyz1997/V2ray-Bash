@@ -59,6 +59,7 @@ bash <(curl -L -s https://install.direct/go.sh)
 
 clear
 echo 'V2Ray 一键安装|配置脚本 Author：Kirito && 雨落无声'
+echo '有任何问题欢迎进QQ群反馈：277717865'
 echo ''
 echo '此脚本会关闭iptables防火墙，切勿用于生产环境！'
 
@@ -71,11 +72,12 @@ while :; do echo
 	fi
 done
 
+echo ''
 
 read -p "输入主要端口（默认：32000）:" mainport
 [ -z "$mainport" ] && mainport=32000
 
-
+echo ''
 
 read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
 	[ -z "$ifhttpheader" ] && ifhttpheader='y'
@@ -130,6 +132,8 @@ read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
 		fi
 fi
 
+echo ''
+
 read -p "是否启用动态端口?（默认开启） [y/n]:" ifdynamicport
   [ -z "$ifdynamicport" ] && ifdynamicport='y'
   if [[ $ifdynamicport == 'y' ]];then
@@ -163,6 +167,33 @@ read -p "是否启用动态端口?（默认开启） [y/n]:" ifdynamicport
   else
     dynamicport=''
   fi
+
+echo ''
+
+while :; do echo
+  echo '1. HTTP代理（默认）'
+  echo '2. Socks代理'
+  read -p "请选择客户端代理类型: " chooseproxytype
+  [ -z "$chooseproxytype" ] && chooseproxytype=1
+  if [[ ! $chooseproxytype =~ ^[1-2]$ ]]; then
+    echo '输入错误，请输入正确的数字！'
+  else
+    break
+  fi
+done
+
+if [[ $chooseproxytype == 1 ]];then
+  proxytype='http'
+else
+  proxytype='socks'
+fi
+
+
+
+
+
+
+
 
 
 #CheckIfInstalled
@@ -258,7 +289,7 @@ cat << EOF > /root/config.json
   "inbound": {
     "port": 1080,
     "listen": "127.0.0.1",
-    "protocol": "http",
+    "protocol": "$proxytype",
     "settings": {
       "auth": "noauth",
       "udp": true,
