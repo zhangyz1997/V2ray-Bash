@@ -75,17 +75,7 @@ done
 read -p "输入主要端口（默认：32000）:" mainport
 [ -z "$mainport" ] && mainport=32000
 
-read -p "输入数据端口起点（默认：32001）:" subport1
-[ -z "$subport1" ] && subport1=32000
 
-read -p "输入数据端口终点（默认：32500）:" subport2
-[ -z "$subport2" ] && subport2=32500
-
-read -p "输入每次开放端口数（默认：10）:" portnum
-[ -z "$portnum" ] && portnum=10
-
-read -p "输入端口变更时间（单位：分钟）:" porttime
-[ -z "$porttime" ] && porttime=5
 
 read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
 	[ -z "$ifhttpheader" ] && ifhttpheader='y'
@@ -138,8 +128,41 @@ read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
 		else
 				mkcp=''
 		fi
-
 fi
+
+read -p "是否启用动态端口?（默认开启） [y/n]:" ifdynamicport
+  [ -z "$ifdynamicport" ] && ifdynamicport='y'
+  if [[ $ifdynamicport == 'y' ]];then
+
+    read -p "输入数据端口起点（默认：32001）:" subport1
+    [ -z "$subport1" ] && subport1=32000
+
+    read -p "输入数据端口终点（默认：32500）:" subport2
+    [ -z "$subport2" ] && subport2=32500
+
+    read -p "输入每次开放端口数（默认：10）:" portnum
+    [ -z "$portnum" ] && portnum=10
+
+    read -p "输入端口变更时间（单位：分钟）:" porttime
+    [ -z "$porttime" ] && porttime=5
+    dynamicport="
+  \"inboundDetour\": [
+    {
+      \"protocol\": \"vmess\",
+      \"port\": \"$subport1-$subport2\",
+      \"tag\": \"detour\",
+      \"settings\": {},
+        \"allocate\": {
+            \"strategy\": \"random\",
+            \"concurrency\": $portnum,
+            \"refresh\": $porttime
+        }${mkcp}${httpheader}
+            }
+  ],
+    "
+  else
+    dynamicport=''
+  fi
 
 
 #CheckIfInstalled
@@ -182,19 +205,9 @@ cat << EOF > config
     "protocol": "freedom",
     "settings": {}
   },
-  "inboundDetour": [
-    {
-      "protocol": "vmess",
-      "port": "$subport1-$subport2",
-      "tag": "detour",
-      "settings": {},
-        "allocate": {
-            "strategy": "random",
-            "concurrency": $portnum,
-            "refresh": $porttime
-        }${mkcp}${httpheader}
-    }
-  ],
+
+      ${dynamicport}
+
   "outboundDetour": [
     {
       "protocol": "blackhole",
@@ -330,3 +343,4 @@ echo '配置完成，客户端配置文件在 /root/config.json'
 echo ''
 echo "程序主端口：$mainport"
 echo "UUID: $uuid"
+
