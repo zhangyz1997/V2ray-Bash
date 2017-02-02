@@ -248,7 +248,7 @@ cat << EOF > /root/config.json
     "protocol": "http",
     "settings": {
       "auth": "noauth",
-      "udp": false,
+      "udp": true,
       "ip": "127.0.0.1"
     }
   },
