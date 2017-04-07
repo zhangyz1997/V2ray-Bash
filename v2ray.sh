@@ -170,6 +170,18 @@ read -p "是否启用动态端口?（默认开启） [y/n]:" ifdynamicport
 
 echo ''
 
+read -p "是否启用 Mux.Cool?（默认开启） [y/n]:" ifmux
+  [ -z "$ifmux" ] && ifmux='y'
+  if [[ $ifmux == 'y' ]];then
+    mux=',
+    "mux": {
+      "enabled": true
+    }
+    '
+  else
+    mux=""
+  fi
+
 while :; do echo
   echo '1. HTTP代理（默认）'
   echo '2. Socks代理'
@@ -284,7 +296,7 @@ rm /root/config.json
 cat << EOF > /root/config.json
 {
   "log": {
-    "loglevel": "warning"
+    "loglevel": "info"
   },
   "inbound": {
     "port": 1080,
@@ -311,7 +323,7 @@ cat << EOF > /root/config.json
                 ]
             }
         ]
-    }${mkcp}${httpheader}
+    }${mkcp}${httpheader}${mux}
   },
   "outboundDetour": [
     {
