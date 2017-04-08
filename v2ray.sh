@@ -59,7 +59,7 @@ bash <(curl -L -s https://install.direct/go.sh)
 
 clear
 echo 'V2Ray 一键安装|配置脚本 Author：Kirito && 雨落无声'
-echo '有任何问题欢迎进QQ群反馈：277717865'
+
 echo ''
 echo '此脚本会关闭iptables防火墙，切勿用于生产环境！'
 
