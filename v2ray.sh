@@ -244,10 +244,7 @@ cat << EOF > config
                 "level": $level,
                 "alterId": 100
             }
-        ],
-        "detour": {
-            "to": "detour"
-        }
+        ]
     }${mkcp}${httpheader}
   },
   "outbound": {
