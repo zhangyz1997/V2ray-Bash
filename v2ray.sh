@@ -234,7 +234,7 @@ cat << EOF > config
     "settings": {
         "clients": [
             {
-                "id": "$uuid",
+                "id": "c4c1149d-1dd0-41a7-bd53-620e6f536f22",
                 "level": $level,
                 "alterId": 100
             }
