@@ -57,7 +57,7 @@ bash <(curl -L -s https://install.direct/go.sh)
 
 }
 
-clear
+ clear
 echo 'V2Ray 一键安装|配置脚本 Author：Kirito && 雨落无声'
 
 echo ''
@@ -81,8 +81,8 @@ mainport=32000
 
 echo ''
 
-read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
-	[ -z "$ifhttpheader" ] && ifhttpheader='y'
+# read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
+	[ -z "$ifhttpheader" ] && ifhttpheader='n'
 	if [[ $ifhttpheader == 'y' ]];then
 		httpheader=',
     "streamSettings": {
@@ -127,7 +127,19 @@ read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
 		if [[ $ifmkcp == 'y' ]];then
         		mkcp=',
    		 		"streamSettings": {
-   			 	"network": "kcp"
+   			 	"network": "kcp",
+				"kcpSettings": {
+                                  "mtu": 1350,
+                                  "tti": 20,
+                                  "uplinkCapacity": 5,
+                                  "downlinkCapacity": 100,
+                                  "congestion": false,
+                                  "readBufferSize": 1,
+                                  "writeBufferSize": 1,
+                                  "header": {
+                                    "type": "srtp"
+                                  }
+                                }
   				}'
 		else
 				mkcp=''
