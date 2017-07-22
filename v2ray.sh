@@ -343,7 +343,8 @@ cat << EOF > /root/config.json
       "tag": "direct"
     }
   ],
-  "dns":     "servers": [
+  "dns":{
+    "servers": [
       "8.8.8.8",
       "8.8.4.4",
       "localhost"
