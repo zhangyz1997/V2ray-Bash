@@ -94,7 +94,7 @@ read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
           "request": {
             "version": "1.1",
             "method": "GET",
-            "path": ["/"],
+             "path": ["/"],
             "headers": {
               "Host": ["www.baidu.com", "www.sogou.com/"],
               "User-Agent": [
@@ -122,7 +122,7 @@ read -p "是否启用HTTP伪装?（默认开启） [y/n]:" ifhttpheader
     }'
 	else
 		httpheader=''
-		read -p "是否启用mKCP协议?（默认开启） [y/n]:" ifmkcp
+		# read -p "是否启用mKCP协议?（默认开启） [y/n]:" ifmkcp
 		[ -z "$ifmkcp" ] && ifmkcp='y'
 		if [[ $ifmkcp == 'y' ]];then
         		mkcp=',
