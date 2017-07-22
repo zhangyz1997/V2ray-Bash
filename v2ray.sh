@@ -22,7 +22,6 @@ ipc=$(ip addr | egrep -o '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | egre
 if [[ "$IP" = "" ]]; then
     ipc=$(wget -qO- -t1 -T2 ipv4.icanhazip.com)
 fi
-
 uuid=$(cat /proc/sys/kernel/random/uuid)
 
 function Install(){
@@ -65,7 +64,7 @@ echo '此脚本会关闭iptables防火墙，切勿用于生产环境！'
 
 while :; do echo
 	# read -p "输入用户等级（自用请输入1，共享请输入0）:" level
-	level=0
+	level=1
 	if [[ ! $level =~ ^[0-1]$ ]]; then
 		echo "${CWARNING}输入错误! 请输入正确的数字!${CEND}"
 	else
