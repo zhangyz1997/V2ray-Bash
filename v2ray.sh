@@ -64,7 +64,8 @@ echo ''
 echo '此脚本会关闭iptables防火墙，切勿用于生产环境！'
 
 while :; do echo
-	read -p "输入用户等级（自用请输入1，共享请输入0）:" level
+	# read -p "输入用户等级（自用请输入1，共享请输入0）:" level
+	level=0
 	if [[ ! $level =~ ^[0-1]$ ]]; then
 		echo "${CWARNING}输入错误! 请输入正确的数字!${CEND}"
 	else
@@ -74,8 +75,9 @@ done
 
 echo ''
 
-read -p "输入主要端口（默认：32000）:" mainport
-[ -z "$mainport" ] && mainport=32000
+# read -p "输入主要端口（默认：32000）:" mainport
+# [ -z "$mainport" ] && 
+mainport=32000
 
 echo ''
 
@@ -134,20 +136,20 @@ fi
 
 echo ''
 
-read -p "是否启用动态端口?（默认开启） [y/n]:" ifdynamicport
+# read -p "是否启用动态端口?（默认开启） [y/n]:" ifdynamicport
   [ -z "$ifdynamicport" ] && ifdynamicport='y'
   if [[ $ifdynamicport == 'y' ]];then
 
-    read -p "输入数据端口起点（默认：32001）:" subport1
+    # read -p "输入数据端口起点（默认：32001）:" subport1
     [ -z "$subport1" ] && subport1=32000
 
-    read -p "输入数据端口终点（默认：32500）:" subport2
+    # read -p "输入数据端口终点（默认：32500）:" subport2
     [ -z "$subport2" ] && subport2=32500
 
-    read -p "输入每次开放端口数（默认：10）:" portnum
+    # read -p "输入每次开放端口数（默认：10）:" portnum
     [ -z "$portnum" ] && portnum=10
 
-    read -p "输入端口变更时间（单位：分钟）:" porttime
+    # read -p "输入端口变更时间（单位：分钟）:" porttime
     [ -z "$porttime" ] && porttime=5
     dynamicport="
   \"inboundDetour\": [
@@ -170,7 +172,7 @@ read -p "是否启用动态端口?（默认开启） [y/n]:" ifdynamicport
 
 echo ''
 
-read -p "是否启用 Mux.Cool?（默认开启） [y/n]:" ifmux
+# read -p "是否启用 Mux.Cool?（默认开启） [y/n]:" ifmux
   [ -z "$ifmux" ] && ifmux='y'
   if [[ $ifmux == 'y' ]];then
     mux=',
@@ -185,7 +187,7 @@ read -p "是否启用 Mux.Cool?（默认开启） [y/n]:" ifmux
 while :; do echo
   echo '1. HTTP代理（默认）'
   echo '2. Socks代理'
-  read -p "请选择客户端代理类型: " chooseproxytype
+  # read -p "请选择客户端代理类型: " chooseproxytype
   [ -z "$chooseproxytype" ] && chooseproxytype=1
   if [[ ! $chooseproxytype =~ ^[1-2]$ ]]; then
     echo '输入错误，请输入正确的数字！'
