@@ -30,7 +30,7 @@ function Install(){
 if [[ ${OS} == 'CentOS' ]];then
 	yum install curl wget unzip ntp ntpdate -y
 else
-	apt-get update
+	apt-get -qq update
 	apt-get install curl unzip ntp wget ntpdate -y
 fi
 
@@ -331,8 +331,7 @@ cat << EOF > /root/config.json
       "tag": "direct"
     }
   ],
-  "dns": {
-    "servers": [
+  "dns":     "servers": [
       "8.8.8.8",
       "8.8.4.4",
       "localhost"
@@ -390,5 +389,5 @@ echo '教程地址：https://github.com/FunctionClub/V2ray-Bash/blob/master/READ
 echo '配置完成，客户端配置文件在 /root/config.json'
 echo ''
 echo "程序主端口：$mainport"
-echo "UUID: $uuid"
+echo "UUID: c4c1149d-1dd0-41a7-bd53-620e6f536f22"
 
